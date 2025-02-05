@@ -25,8 +25,8 @@ def extract_text_from_txt(uploaded_file):
 
 def cleaning(text):
     #text=re.sub(r'\s+',' ',text)
-    text=re.sub(r'\n+','\n',re.sub(r"""Pagina \d+ di \d+|pagina \d+ di \d+|Pag. \d+ di \d+|
-                                   Pag. \d+|Pagina \d+|pagina \d+""",'',text))
+    text=re.sub(r"""Pagina \d+ di \d+|pagina \d+ di \d+|Pag. \d+ di \d+|
+                                   Pag. \d+|Pagina \d+|pagina \d+""",'',text)
     return text
 
 
