@@ -18,7 +18,7 @@ def extract_text_from_pdf_with_fitz(uploaded_file):
         text += page.get_text("text")
     return text
 
-def extract_text_from_pdf1(uploaded_file):
+def extract_text_from_pdf(uploaded_file):
     """Estrae il testo da un PDF usando pdfplumber."""
     text = ""
     with pdfplumber.open(uploaded_file) as pdf:
