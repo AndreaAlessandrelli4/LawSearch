@@ -301,8 +301,8 @@ elif input_mode == "Carica un file PDF/TXT":
             query = extract_text_from_txt(uploaded_file)
 
 # Mostra il testo estratto
-if query_text:
-    st.text_area("Testo estratto:", query_text, height=200)
+if query:
+    st.text_area("Testo estratto:", query, height=200)
 
 
 
