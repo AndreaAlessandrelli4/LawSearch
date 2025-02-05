@@ -327,20 +327,15 @@ elif input_mode == "Carica un file PDF/TXT/DOCX":
                 query = cleaning(query)
                 if "Errore" in query:
                     st.error(query)
-                else:
-                    st.text_area("Testo estratto dal PDF:", query)
             elif file_type == "text/plain":
                 # Gestisci file di tipo txt
                 query = uploaded_file.read().decode("utf-8")
                 query = cleaning(query)
-                st.text_area("Contenuto del file txt:", query)
             else: #uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
                 query = extract_text_from_docx(uploaded_file)
                 query = cleaning(query)
                 if "Errore" in query:
                     st.error(query)
-                else:
-                    st.text_area("Testo estratto dal DOCX:", query)
         except:
             st.warning("Carica un file PDF, DOCX o TXT valido.")
 
