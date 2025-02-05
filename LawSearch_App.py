@@ -23,6 +23,13 @@ def extract_text_from_txt(uploaded_file):
     return uploaded_file.read().decode("utf-8")
 
 
+def cleaning(text):
+    #text=re.sub(r'\s+',' ',text)
+    text=re.sub(r'\n+','\n',re.sub(r"""Pagina \d+ di \d+|pagina \d+ di \d+|Pag. \d+ di \d+|
+                                   Pag. \d+|Pagina \d+|pagina \d+""",'',text))
+    return text
+
+
 
 st.markdown(
     """
@@ -297,8 +304,11 @@ elif input_mode == "Carica un file PDF/TXT":
         
         if file_type == "application/pdf":
             query = extract_text_from_pdf(uploaded_file)
+            query = cleaning(query)
         elif file_type == "text/plain":
             query = extract_text_from_txt(uploaded_file)
+            query = cleaning(query)
+
 
 # Mostra il testo estratto
 if query:
