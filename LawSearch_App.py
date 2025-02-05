@@ -10,6 +10,7 @@ from weaviate.gql.get import HybridFusion
 #from weaviate.gql.query import HybridFusion
 import pdfplumber
 import fitz  # PyMuPDF
+import docx
 
 #def extract_text_from_pdf_with_fitz(uploaded_file):
 #    doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
