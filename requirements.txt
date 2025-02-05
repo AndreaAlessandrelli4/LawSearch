@@ -4,3 +4,4 @@ sentence-transformers==3.0.1
 torch==2.5.0
 numpy==1.26.4
 pdfplumber
+PyMuPDF
