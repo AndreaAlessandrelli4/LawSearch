@@ -8,6 +8,14 @@ import weaviate
 import torch
 from weaviate.gql.get import HybridFusion
 #from weaviate.gql.query import HybridFusion
+import fitz  # PyMuPDF
+
+def extract_text_from_pdf(uploaded_file):
+    doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
+    text = "\n".join([page.get_text("text") for page in doc])
+    return text
+
+
 
 st.markdown(
     """
@@ -261,8 +269,16 @@ alpha = st.sidebar.slider(
 )
 
 
-st.title("Query")
-query = st.text_input("Inserisci la tua query:", value=" ")
+st.title("Scrivi o Carica un documento")
+query = st.text_input("Inserisci la tua query (lascia vuoto se carichi un PDF):", value="")
+
+uploaded_file = st.file_uploader("Carica un documento PDF", type=["pdf"])
+
+if uploaded_file is not None:
+    query = extract_text_from_pdf(uploaded_file)  # Sovrascrive la query col testo estratto dal PDF
+    st.success("Testo estratto dal PDF e usato come query!")
+
+
 # Generazione dinamica dei filtri con menu a tendina espandibili
 st.title("Filtri di Ricerca")
 
