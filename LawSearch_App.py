@@ -11,12 +11,23 @@ from weaviate.gql.get import HybridFusion
 import pdfplumber
 import fitz  # PyMuPDF
 
-def extract_text_from_pdf_with_fitz(uploaded_file):
-    doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
-    text = ""
-    for page in doc:
-        text += page.get_text("text")
-    return text
+#def extract_text_from_pdf_with_fitz(uploaded_file):
+#    doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
+#    text = ""
+#    for page in doc:
+#        text += page.get_text("text")
+#    return text
+
+def extract_text_from_docx(uploaded_file):
+    try:
+        doc = docx.Document(uploaded_file)
+        text = ""
+        for para in doc.paragraphs:
+            text += para.text + "\n"
+        return text
+    except Exception as e:
+        return f"Errore durante l'elaborazione del DOCX: {e}"
+        
 
 def extract_text_from_pdf(uploaded_file):
     """Estrae il testo da un PDF usando pdfplumber."""
@@ -296,7 +307,7 @@ st.title("Inserisci una query o carica un documento")
 # Opzione per scegliere il metodo di input
 input_mode = st.radio(
     "Scegli il metodo di input:",
-    ("Scrivi una query", "Carica un file PDF/TXT")
+    ("Scrivi una query", "Carica un file PDF/TXT/DOCX")
 )
 
 query = ""
@@ -304,18 +315,35 @@ query = ""
 if input_mode == "Scrivi una query":
     query = st.text_input("Inserisci la tua query:")
     
-elif input_mode == "Carica un file PDF/TXT":
-    uploaded_file = st.file_uploader("Carica un file", type=["pdf", "txt"])
+elif input_mode == "Carica un file PDF/TXT/DOCX":
+    uploaded_file = st.file_uploader("Carica un file", type=["pdf", "txt", "docx"])
     
     if uploaded_file is not None:
         file_type = uploaded_file.type
-        
-        if file_type == "application/pdf":
-            query = extract_text_from_pdf(uploaded_file)
-        elif file_type == "text/plain":
-            query = extract_text_from_txt(uploaded_file)
-            
-#query = cleaning(query)
+        try:
+            if file_type == "application/pdf":
+                query = extract_text_from_pdf(uploaded_file)
+                query = cleaning(query)
+                if "Errore" in query:
+                    st.error(query)
+                else:
+                    st.text_area("Testo estratto dal PDF:", query)
+            elif file_type == "text/plain":
+                # Gestisci file di tipo txt
+                query = uploaded_file.read().decode("utf-8")
+                query = cleaning(query)
+                st.text_area("Contenuto del file txt:", query)
+            else: #uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+                query = extract_text_from_docx(uploaded_file)
+                query = cleaning(query)
+                if "Errore" in query:
+                    st.error(query)
+                else:
+                    st.text_area("Testo estratto dal DOCX:", query)
+        except:
+            st.warning("Carica un file PDF, DOCX o TXT valido.")
+
+
 
 
 # Mostra il testo estratto
