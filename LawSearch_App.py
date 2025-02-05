@@ -307,7 +307,7 @@ elif input_mode == "Carica un file PDF/TXT":
         elif file_type == "text/plain":
             query = extract_text_from_txt(uploaded_file)
             
-query = cleaning(query)
+#query = cleaning(query)
 
 
 # Mostra il testo estratto
