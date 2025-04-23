@@ -152,6 +152,7 @@ st.markdown(
 cloud_name = "TestoCompleto"
 
 key = os.getenv('WEAVIATE_API_KEY')
+print(key)
 if not key:
     raise ValueError("La chiave API di Weaviate non è configurata. Verifica i secrets su Streamlit Cloud.")
 
