@@ -158,8 +158,9 @@ if not key:
 
 #url = "https://wdddqkdjqfwdxaklotxqqa.c0.europe-west3.gcp.weaviate.cloud"
 #url = "https://tvyyynnzr2cvrivypkgq6w.c0.europe-west3.gcp.weaviate.cloud"
+#url = "https://ew45fkfuruhvjbhc0uftq.c0.europe-west3.gcp.weaviate.cloud"
 url = "https://ew45fkfuruhvjbhc0uftq.c0.europe-west3.gcp.weaviate.cloud"
-# To be changed
+
 
 
 
